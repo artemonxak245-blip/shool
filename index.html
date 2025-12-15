@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<title>HomeLang online</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+body { margin:0; font-family:'Poppins', sans-serif; background:#e0f0ff; font-size:20px; color:#333; }
+header { background: url('https://images.unsplash.com/photo-1529070538774-1843cb3265df?fit=crop&w=1600') center/cover no-repeat; color:white; padding:70px 20px 130px; text-align:center; position:relative; }
+header h1{ font-size:60px; margin-bottom:10px; }
+header p{ font-size:30px; margin-top:0; }
+.logo { position:absolute; top:15px; left:20px; display:flex; align-items:center; gap:10px; color:white; }
+.logo-text strong{ font-size:26px; letter-spacing:1px; }
+.logo-text small{ display:block; font-size:14px; opacity:0.85; }
+.lang-buttons-header { position:absolute; top:15px; right:20px; }
+.lang-buttons-header button { font-size:22px; background:#444; border:none; border-radius:6px; padding:8px 10px; cursor:pointer; margin-left:5px; }
+nav { background:#333; padding:18px; display:flex; justify-content:center; flex-wrap:wrap; gap:10px; position:sticky; top:0; z-index:100; }
+nav button { background:#555; color:white; border:none; padding:14px 22px; font-size:20px; border-radius:8px; cursor:pointer; }
+nav button:hover, nav button.active{ background:#ffae00; }
+section{ display:none; max-width:1100px; margin:50px auto; padding:40px; background:white; border-radius:25px; box-shadow:0 10px 35px rgba(0,0,0,0.2);}
+section.active{ display:block; }
+section h2{text-align:center; font-size:76px; color:#000; font-family:'Roboto', sans-serif;}
+.cards.home-cards{ display:grid; grid-template-columns:repeat(2,1fr); gap:30px; justify-items:stretch; align-items:stretch; }
+.cards.home-cards .card{ display:flex; flex-direction:column; width:100%; max-width:400px; background:#fff; border-radius:25px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.15); border:2px solid #eee; opacity:0; transform:translateY(40px); transition: all 0.8s ease; }
+.cards.home-cards .card.visible{ opacity:1; transform:translateY(0); }
+.cards.home-cards .card.wide{ grid-column:1 / -1; max-width:900px; }
+.card .info{ padding:25px; flex:1; }
+.card.online-img img{ height:350px; object-fit:cover; }
+.card img{ width:100%; height:240px; object-fit:cover; }
+.card h3{ color:#000; }
+.highlight{ margin-top:15px; padding:12px; background:#f2f2f2; border-radius:15px; text-align:center; font-weight:600; }
+.faq-item{ margin-bottom:15px; background:#d0f0ff; border-radius:12px; }
+.faq-question{ padding:30px; font-weight:600; cursor:pointer; color:#000; font-size:40px; display:flex; justify-content:space-between; align-items:center; }
+.faq-answer{ max-height:0; overflow:hidden; padding:0 30px; border-top:1px solid #ccc; font-size:36px; transition: max-height 0.3s ease, padding 0.3s ease; }
+.price{ background:#000; color:white; padding:20px; margin:15px 0; border-radius:20px; text-align:center; font-size:24px; }
+form{ display:flex; flex-direction:column; gap:25px; align-items:center; }
+input,textarea{ padding:25px; font-size:20px; width:95%; max-width:800px; border-radius:15px; text-align:left; }
+textarea{ height:250px; resize:vertical; }
+.send{ background:#ff6600; color:white; border:none; padding:20px; font-size:22px; border-radius:15px; cursor:pointer; width:60%; }
+#contact h2{ font-size:38px; font-family:'Roboto', sans-serif; }
+#contact p{ font-size:40px; }
+@media(max-width:900px){ .cards.home-cards{ grid-template-columns:1fr; } .cards.home-cards .card.wide{ grid-column:1; } }
+@media(max-width:768px){ .cards.home-cards .card{ max-width:90%; } section h2{font-size:14vw;} .card.online-img{ height:300px; } input,textarea{ width:90%; font-size:18px; padding:20px; } .send{ width:70%; }}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <svg width="46" height="46" viewBox="0 0 64 64">
+      <path d="M8 30 L32 10 L56 30 V56 H38 V40 H26 V56 H8 Z" fill="none" stroke="white" stroke-width="3"/>
+      <path d="M24 28 h16 a6 6 0 0 1 0 12 h-6 l-4 4 v-4 h-6 a6 6 0 0 1 0-12z" fill="white"/>
+    </svg>
+    <div class="logo-text"><strong>HomeLang</strong><small>online</small></div>
+  </div>
+  <div class="lang-buttons-header">
+    <button onclick="setLang('ua')">🇺🇦</button>
+    <button onclick="setLang('ru')">🇷🇺</button>
+  </div>
+  <h1 id="title"></h1>
+  <p id="subtitle"></p>
+</header>
+
+<nav>
+ <button onclick="openTab('home')" id="btn_home"></button>
+ <button onclick="openTab('courses')" id="btn_courses"></button>
+ <button onclick="openTab('price')" id="btn_price"></button>
+ <button onclick="openTab('contact')" id="btn_contact"></button>
+ <button onclick="openTab('signup')" style="background:#008000;" id="btn_signup"></button>
+</nav>
+
+<section id="home" class="active">
+<h2 id="home_title"></h2>
+<p id="home_text"></p>
+<div class="cards home-cards">
+  <div class="card">
+    <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?fit=crop&w=800">
+    <div class="info">
+      <h3 id="home_card1"></h3>
+      <p id="home_card1_text"></p>
+      <div class="highlight">7–16</div>
+    </div>
+  </div>
+  <div class="card">
+    <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?fit=crop&w=800">
+    <div class="info">
+      <h3 id="home_card2"></h3>
+      <p id="home_card2_text"></p>
+      <div class="highlight">18+</div>
+    </div>
+  </div>
+  <div class="card wide online-img">
+    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?fit=crop&w=1600">
+    <div class="info">
+      <h3 id="home_card3"></h3>
+      <p id="home_card3_text"></p>
+      <div class="highlight">Online</div>
+    </div>
+  </div>
+</div>
+<h2 id="faq_title"></h2>
+<div class="faq-item"><div class="faq-question" id="faq_q1"></div><div class="faq-answer" id="faq_a1"></div></div>
+<div class="faq-item"><div class="faq-question" id="faq_q2"></div><div class="faq-answer" id="faq_a2"></div></div>
+<div class="faq-item"><div class="faq-question" id="faq_q3"></div><div class="faq-answer" id="faq_a3"></div></div>
+</section>
+
+<section id="courses">
+<h2 id="courses_title"></h2>
+<div class="cards home-cards">
+ <div class="card">
+  <img src="https://images.unsplash.com/photo-1581093588401-0e9c60a0c195?fit=crop&w=800">
+  <div class="info">
+   <h3 id="en_card"></h3>
+   <p id="en_desc"></p>
+   <div class="highlight" id="en_highlight"></div>
+  </div>
+ </div>
+ <div class="card">
+  <img src="https://images.unsplash.com/photo-1519682337058-a94d519337bc?fit=crop&w=800">
+  <div class="info">
+   <h3 id="de_card"></h3>
+   <p id="de_desc"></p>
+   <div class="highlight" id="de_highlight"></div>
+  </div>
+ </div>
+</div>
+</section>
+
+<section id="price">
+<h2 id="price_title"></h2>
+<div class="price" id="price1"></div>
+<div class="price" id="price2"></div>
+<div class="price" id="price3"></div>
+</section>
+
+<section id="contact">
+<h2 id="contact_title"></h2>
+<p id="phone"></p>
+<p id="telegram"></p>
+<p id="email"></p>
+</section>
+
+<section id="signup">
+<h2 id="signup_title"></h2>
+<form>
+ <input placeholder="Імʼя" required>
+ <input placeholder="Телефон / Telegram" required>
+ <textarea placeholder="Повідомлення" required></textarea>
+ <button type="submit" class="send" id="send_btn"></button>
+</form>
+</section>
+
+<script>
+let msgSent="";
+const data={
+ ua:{ title:"HomeLang online", subtitle:"Домашня онлайн-школа мов", btn_home:"Про школу", btn_courses:"Програми", btn_price:"Вартість", btn_contact:"Контакти", btn_signup:"Запис",
+ home_title:"Невеличка онлайн школа", home_text:"Навчаємо дітей та дорослих у комфортному онлайн-форматі. Пропонуємо сучасні методики та інтерактивні заняття.",
+ home_card1:"Діти та підлітки", home_card1_text:"Шкільна програма, розвиток мовлення, підготовка до іспитів та інтерактивні вправи.",
+ home_card2:"Дорослі", home_card2_text:"Мова для роботи, переїзду, подорожей та життя. Розмовна практика та граматика.",
+ home_card3:"Онлайн формат", home_card3_text:"Навчання з будь-якої точки світу. Гнучкий графік та персональний підхід.",
+ faq_title:"Популярні запитання", faq_q1:"Чи можна почати з нуля?", faq_a1:"Так, ми працюємо з початківцями будь-якого рівня.",
+ faq_q2:"Індивідуально чи групи?", faq_a2:"Індивідуально або міні-групи 2–4 учні.",
+ faq_q3:"Скільки триває урок?", faq_a3:"Стандартне заняття — 60 хв.",
+ courses_title:"Навчальні програми", en_card:"Англійська онлайн", en_desc:"Розмовна практика, граматика, підготовка до міжнародних іспитів, інтерактивні завдання та рольові ігри.", en_highlight:"З нуля – B2",
+ de_card:"Німецька онлайн", de_desc:"Системне навчання без перевантаження. Практика говоріння, граматика, підготовка до сертифікатів.", de_highlight:"A1 – B1",
+ price_title:"Вартість навчання", price1:"Пробний урок — 30 хв", price2:"Індивідуально — 60 хв", price3:"Абонементи зі знижками",
+ contact_title:"Контакти", phone:"Телефон: +38 (0XX) XXX-XX-XX", telegram:"Telegram: @your_name", email:"Email: your_email@gmail",
+ signup_title:"Запис на навчання", send_btn:"Надіслати"
+ },
+ ru:{ title:"HomeLang online", subtitle:"Домашняя онлайн-школа языков", btn_home:"О школе", btn_courses:"Программы", btn_price:"Стоимость", btn_contact:"Контакты", btn_signup:"Запись",
+ home_title:"Небольшая онлайн школа", home_text:"Обучаем детей и взрослых в удобном онлайн-формате. Предлагаем современные методики и интерактивные занятия.",
+ home_card1:"Дети и подростки", home_card1_text:"Школьная программа, развитие речи, подготовка к экзаменам и интерактивные упражнения.",
+ home_card2:"Взрослые", home_card2_text:"Язык для работы, переезда, путешествий и жизни. Разговорная практика и грамматика.",
+ home_card3:"Онлайн формат", home_card3_text:"Обучение из любой точки мира. Гибкий график и персональный подход.",
+ faq_title:"Популярные вопросы", faq_q1:"Можно ли начать с нуля?", faq_a1:"Да, мы работаем с начинающими любого уровня.",
+ faq_q2:"Индивидуально или группы?", faq_a2:"Индивидуально или мини-группы 2–4 человека.",
+ faq_q3:"Сколько длится урок?", faq_a3:"Стандартное занятие — 60 минут.",
+ courses_title:"Учебные программы", en_card:"Английский онлайн", en_desc:"Разговорная практика, грамматика, подготовка к международным экзаменам, интерактивные задания и ролевые игры.", en_highlight:"С нуля – B2",
+ de_card:"Немецкий онлайн", de_desc:"Пошаговое обучение без перегрузки. Практика говорения, грамматика, подготовка к сертификатам.", de_highlight:"A1 – B1",
+ price_title:"Стоимость обучения", price1:"Пробный урок — 30 мин", price2:"Индивидуально — 60 мин", price3:"Абонементы со скидками",
+ contact_title:"Контакты", phone:"Телефон: +38 (0XX) XXX-XX-XX", telegram:"Telegram: @your_name", email:"Email: your_email@gmail",
+ signup_title:"Запись на обучение", send_btn:"Отправить"
+ }
+};
+
+function setLang(lang){
+ msgSent = lang==="ua" ? "📩 Заявку надіслано!" : "📩 Заявка отправлена!";
+ for(let id in data[lang]) if(document.getElementById(id)) document.getElementById(id).textContent=data[lang][id];
+ // Навигация
+ document.getElementById('btn_home').textContent=data[lang].btn_home;
+ document.getElementById('btn_courses').textContent=data[lang].btn_courses;
+ document.getElementById('btn_price').textContent=data[lang].btn_price;
+ document.getElementById('btn_contact').textContent=data[lang].btn_contact;
+ document.getElementById('btn_signup').textContent=data[lang].btn_signup;
+ document.getElementById('send_btn').textContent=data[lang].send_btn;
+}
+setLang("ua");
+
+function openTab(tab){
+ document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+ document.getElementById(tab).classList.add("active");
+ document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+ const btn = document.querySelector(`nav button[onclick="openTab('${tab}')"]`);
+ if(btn) btn.classList.add("active");
+}
+
+// FAQ toggle
+document.querySelectorAll(".faq-question").forEach(q=>{
+ const plus = document.createElement('span');
+ plus.textContent='+';
+ q.appendChild(plus);
+ q.addEventListener("click",()=>{
+   const a=q.nextElementSibling;
+   if(a.style.maxHeight){
+     a.style.maxHeight = null;
+     a.style.padding = "0 30px";
+     plus.textContent='+';
+   } else {
+     a.style.maxHeight = a.scrollHeight + "px";
+     a.style.padding = "30px";
+     plus.textContent='−';
+   }
+ });
+});
+
+// Telegram form
+const BOT_TOKEN = "YOUR_BOT_TOKEN_HERE"; 
+const CHAT_ID = "YOUR_CHAT_ID_HERE";
+document.querySelector("#signup form").addEventListener("submit", function(e){
+ e.preventDefault();
+ const name = this.querySelector("input").value;
+ const contact = this.querySelectorAll("input")[1].value;
+ const message = this.querySelector("textarea").value;
+ const text = `📩 НОВА ЗАЯВКА — HomeLang online\n\n👤 Імʼя: ${name}\n📞 Контакт: ${contact}\n💬 Повідомлення: ${message}`;
+ fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+  method:"POST",
+  headers:{"Content-Type":"application/json"},
+  body:JSON.stringify({chat_id:CHAT_ID,text:text})
+ }).then(r=>r.json()).then(data=>{
+  if(data.ok){alert(msgSent);this.reset();}
+  else alert("❌ Помилка відправки");
+ }).catch(()=>alert("❌ Помилка з'єднання"));
+});
+
+// Animation on scroll
+const cards = document.querySelectorAll(".cards.home-cards .card");
+const observer = new IntersectionObserver(entries=>{
+ entries.forEach(entry=>{
+   if(entry.isIntersecting){ entry.target.classList.add("visible"); }
+ });
+},{ threshold: 0.2 });
+cards.forEach(card=>observer.observe(card));
+</script>
+
+</body>
+</html>
